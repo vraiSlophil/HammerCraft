@@ -1,0 +1,11 @@
+name: HammerCraft
+version: '${version}'
+main: fr.slophil.hammercraft.HammerCraft
+api-version: 1.19
+authors: [ Slophil ]
+
+commands:
+  hammercraft:
+    permission: hammercraft.command.hammercraft
+    description: Give you a hammer
+    usage: /hammer

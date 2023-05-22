@@ -1,0 +1,2 @@
+HammerCraftCommandUsageMessage: '&cUsage: /hammercraft give <player> <hammer> [amount]'
+HammerCraftCommandSenderMustBePlayerMessage: '&cYou must be a player to use this command !'
