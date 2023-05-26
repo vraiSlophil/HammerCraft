@@ -52,19 +52,21 @@ public class HammerBlockBreakEvent implements Listener {
             ((Damageable) itemInHandClone.getItemMeta()).setDamage(0);
         }
 
+        // NORTH / SOUTH
         for (HammersConstructor hammer : HammersConstructor.values()) {
             if (isSimilarIgnoreDurability(itemInHand, hammer.getItemStack())) {
                 if (cardinalDirection.equals(PlayerDirection.NORTH) || cardinalDirection.equals(PlayerDirection.SOUTH)) {
                     for (int x = blockX - 1; x <= blockX + 1; x++) {
                         for (int y = blockY - 1; y <= blockY + 1; y++) {
                             Block blockToBreak = block.getWorld().getBlockAt(x, y, blockZ);
+                            if (blockToBreak.getLocation().equals(block.getLocation())) {
+                                continue;
+                            }
                             if (blockToBreak.getType() != Material.AIR) {
                                 if (blockToBreak.isValidTool(itemInHand)) {
                                     blockToBreak.breakNaturally(itemInHand);
-                                    if (itemInHand.getItemMeta() instanceof Damageable) {
-                                        ((Damageable) itemInHand.getItemMeta()).setDamage(((Damageable) itemInHand.getItemMeta()).getDamage() + 1);
-                                        itemInHand.setItemMeta(itemInHand.getItemMeta());
-                                    }
+                                    ((Damageable) itemInHand.getItemMeta()).setDamage(((Damageable) itemInHand.getItemMeta()).getDamage() + 1);
+                                    itemInHand.setItemMeta(itemInHand.getItemMeta());
                                 }
                             }
                         }
@@ -72,6 +74,48 @@ public class HammerBlockBreakEvent implements Listener {
                 }
             }
         }
+
+        // EAST / WEST
+        for (HammersConstructor hammer : HammersConstructor.values()) {
+            if (isSimilarIgnoreDurability(itemInHand, hammer.getItemStack())) {
+                if (cardinalDirection.equals(PlayerDirection.EAST) || cardinalDirection.equals(PlayerDirection.WEST)) {
+                    for (int z = blockZ - 1; z <= blockZ + 1; z++) {
+                        for (int y = blockY - 1; y <= blockY + 1; y++) {
+                            Block blockToBreak = block.getWorld().getBlockAt(blockX, y, z);
+                            if (blockToBreak.getType() != Material.AIR) {
+                                if (blockToBreak.isValidTool(itemInHand)) {
+                                    blockToBreak.breakNaturally(itemInHand);
+                                    ((Damageable) itemInHand.getItemMeta()).setDamage(((Damageable) itemInHand.getItemMeta()).getDamage() + 1);
+                                    itemInHand.setItemMeta(itemInHand.getItemMeta());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // UP / DOWN
+        for (HammersConstructor hammer : HammersConstructor.values()) {
+            if (isSimilarIgnoreDurability(itemInHand, hammer.getItemStack())) {
+                if (cardinalDirection.equals(PlayerDirection.UP) || cardinalDirection.equals(PlayerDirection.DOWN)) {
+                    for (int x = blockX - 1; x <= blockX + 1; x++) {
+                        for (int z = blockZ - 1; z <= blockZ + 1; z++) {
+                            Block blockToBreak = block.getWorld().getBlockAt(x, blockY, z);
+                            if (blockToBreak.getType() != Material.AIR) {
+                                if (blockToBreak.isValidTool(itemInHand)) {
+                                    blockToBreak.breakNaturally(itemInHand);
+                                    ((Damageable) itemInHand.getItemMeta()).setDamage(((Damageable) itemInHand.getItemMeta()).getDamage() + 1);
+                                    itemInHand.setItemMeta(itemInHand.getItemMeta());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 
     public static boolean isSimilarIgnoreDurability(ItemStack itemStack1, ItemStack itemStack2) {
